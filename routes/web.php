@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DMS\DocumentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+// Route::middleware(['auth'])->prefix('dms')->name('dms.')->group(function () {
+
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+//     Route::resource('documents', DocumentController::class);
+
+// });
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('documents', DocumentController::class);
+
+});
+
+require __DIR__ . '/auth.php';
