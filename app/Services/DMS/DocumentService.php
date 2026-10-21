@@ -1,7 +1,11 @@
 <?php
 namespace App\Services\DMS;
 
+use App\Models\Department;
 use App\Models\Document;
+use App\Models\DocumentCategory;
+use App\Models\DocumentType;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +17,13 @@ class DocumentService
      */
     public function getAll()
     {
-        return Document::latest()->paginate(10);
+        return Document::with([
+            'documentType',
+            'category',
+            'department',
+        ])
+            ->latest('id')
+            ->paginate(10);
     }
 
     /**
@@ -22,6 +32,38 @@ class DocumentService
     public function find(int $id): Document
     {
         return Document::findOrFail($id);
+    }
+
+    public function getById($id)
+    {
+        return Document::with([
+            'documentType',
+            'category',
+            'department',
+        ])->findOrFail($id);
+    }
+
+    public function createData(): array
+    {
+        return [
+
+            'documentTypes' => DocumentType::where('status', 1)
+                ->orderBy('document_type_name')
+                ->get(),
+
+            'categories'    => DocumentCategory::where('status', 1)
+                ->orderBy('category_name')
+                ->get(),
+
+            'departments'   => Department::where('status', 1)
+                ->orderBy('department_name')
+                ->get(),
+
+            'owners'        => User::where('status', 'Active')
+                ->orderBy('name')
+                ->get(),
+
+        ];
     }
 
     /**
@@ -40,39 +82,23 @@ class DocumentService
                 $attachment = $request->file('attachment')
                     ->store('documents', 'public');
             }
-
+            // dd($request->all());
             $document = Document::create([
 
-                'document_no'    => $this->generateDocumentNumber(),
-
-                'title'          => $request->title,
-
-                'document_type'  => $request->document_type,
-
-                'category'       => $request->category,
-
-                'department'     => $request->department,
-
-                'owner'          => $request->owner,
-
-                'version'        => '1.0',
-
-                'effective_date' => $request->effective_date,
-
-                'review_date'    => $request->review_date,
-
-                'expiry_date'    => $request->expiry_date,
-
-                'description'    => $request->description,
-
-                'attachment'     => $attachment,
-
-                'status'         => 'Draft',
-
-                'created_by'     => auth()->id(),
-
-                'updated_by'     => auth()->id(),
-
+                'document_no'      => $this->generateDocumentNumber(),
+                'title'            => $request->title,
+                'document_type_id' => $request->document_type_id,
+                'category_id'      => $request->category_id,
+                'department_id'    => $request->department_id,
+                'owner'            => $request->owner,
+                'version'          => $request->version,
+                'effective_date'   => $request->effective_date,
+                'review_date'      => $request->review_date,
+                'expiry_date'      => $request->expiry_date,
+                'description'      => $request->description,
+                'attachment'       => $attachment,
+                'status'           => 'Draft',
+                'created_by'       => auth()->id(),
             ]);
 
             DB::commit();

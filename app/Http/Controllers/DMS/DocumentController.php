@@ -24,7 +24,10 @@ class DocumentController extends Controller
 
     public function create()
     {
-        return view('dms.documents.create');
+        $data = $this->service->createData();
+
+        return view('dms.documents.create', $data);
+
     }
 
     public function store(Request $request)
@@ -32,13 +35,14 @@ class DocumentController extends Controller
 
         $request->validate([
 
-            'title'         => 'required',
+            'title'            => 'required',
 
-            'document_type' => 'required',
+            'document_type_id' => 'required',
 
-            'category'      => 'required',
+            'category_id'      => 'required',
 
         ]);
+        // dd($request->all());
 
         $this->service->store($request);
 
@@ -50,9 +54,10 @@ class DocumentController extends Controller
 
     public function show($id)
     {
-
+        return response()->json(
+            $this->service->getById($id)
+        );
     }
-
     public function edit($id)
     {
 
