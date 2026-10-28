@@ -10,7 +10,7 @@
         <div class="sidebar-menu-title">Menu</div>
         <ul class="sidebar-menu-list">
           <li class="sidebar-menu-item">
-            <a href="index.html" class="sidebar-menu-link active" id="menu-overview" title="Overview">
+            <a href="{{route('dashboard')}}" class="sidebar-menu-link active" id="menu-overview" title="Overview">
               <i class="bi bi-grid-fill"></i>
               <span>Dashboard</span>
             </a>
@@ -20,24 +20,24 @@
 
       <!-- Group: Components -->
       <div class="sidebar-menu-section">
-        <div class="sidebar-menu-title">Components</div>
+        <div class="sidebar-menu-title">Master</div>
         <ul class="sidebar-menu-list">
           <li class="sidebar-menu-item">
-            <a href="tables-basic.html" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
+            <a href="{{url('documentType')}}" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
               <i class="bi bi-table"></i>
-              <span>Basic Tables</span>
+              <span>Document Type</span>
             </a>
           </li>
           <li class="sidebar-menu-item">
-            <a href="ui-forms.html" class="sidebar-menu-link" id="menu-uiforms" title="Forms and Input">
+            <a href="{{url('category')}}" class="sidebar-menu-link" id="menu-uiforms" title="Forms and Input">
               <i class="bi bi-input-cursor-text"></i>
-              <span>Forms & Input</span>
+              <span>Category</span>
             </a>
           </li>
           <li class="sidebar-menu-item">
-            <a href="ui-buttons.html" class="sidebar-menu-link" id="menu-uibuttons" title="Buttons">
+            <a href="{{url('department')}}" class="sidebar-menu-link" id="menu-uibuttons" title="Buttons">
               <i class="bi bi-menu-button-wide-fill"></i>
-              <span>Buttons & Alerts</span>
+              <span>Department</span>
             </a>
           </li>
         </ul>
@@ -45,26 +45,26 @@
 
       <!-- Group: Pages -->
       <div class="sidebar-menu-section">
-        <div class="sidebar-menu-title">Pages</div>
+        <div class="sidebar-menu-title">Activity</div>
         <ul class="sidebar-menu-list">
           <li class="sidebar-menu-item">
-            <a href="page-blank.html" class="sidebar-menu-link" id="menu-blankpage" title="Blank Page">
+            <a href="{{ route('documents.index') }}" class="sidebar-menu-link" id="menu-blankpage" title="Blank Page">
               <i class="bi bi-file-earmark"></i>
-              <span>Blank Page</span>
+              <span>Document</span>
             </a>
           </li>
-          <li class="sidebar-menu-item">
+          <!-- <li class="sidebar-menu-item">
             <a href="page-login.html" class="sidebar-menu-link" id="menu-loginpage" title="Login Page">
               <i class="bi bi-box-arrow-in-right"></i>
               <span>Login Screen</span>
             </a>
-          </li>
-          <li class="sidebar-menu-item">
+          </li> -->
+          <!-- <li class="sidebar-menu-item">
             <a href="page-404.html" class="sidebar-menu-link" id="menu-404" title="404 Page">
               <i class="bi bi-slash-circle"></i>
               <span>Error 404</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>

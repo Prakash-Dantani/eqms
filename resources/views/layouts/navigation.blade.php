@@ -11,7 +11,7 @@
         </button>
 
         <!-- Quick Actions Dropdown -->
-        <div class="dropdown ms-2">
+        <!-- <div class="dropdown ms-2">
           <button class="btn-quick-action dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
             id="quick-actions-dropdown">
             <i class="bi bi-plus-lg"></i>
@@ -27,15 +27,15 @@
             </li>
             <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> System Settings</a></li>
           </ul>
-        </div>
+        </div> -->
       </div>
 
       <!-- Mid navbar: search pill -->
       <div class="navbar-search-wrapper">
-        <input type="text" class="navbar-search-input" placeholder="Search anything in Spark..." id="main-search">
+        <!-- <input type="text" class="navbar-search-input" placeholder="Search anything in Spark..." id="main-search">
         <button class="navbar-search-btn" aria-label="Search">
           <i class="bi bi-search"></i>
-        </button>
+        </button> -->
       </div>
 
       <!-- Right actions -->
@@ -57,8 +57,8 @@
               <button class="btn-clear-all" type="button">Mark all read</button>
             </div>
             <div class="notification-list">
-              <!-- Sale Notification -->
-              <a href="#" class="notification-item">
+
+              <!-- <a href="#" class="notification-item">
                 <div class="notification-icon bg-success text-white">
                   <i class="bi bi-wallet2"></i>
                 </div>
@@ -68,7 +68,8 @@
                 </div>
                 <span class="notification-unread-dot"></span>
               </a>
-              <!-- User Registration Notification -->
+
+
               <a href="#" class="notification-item">
                 <div class="notification-icon bg-primary text-white">
                   <i class="bi bi-person-plus-fill"></i>
@@ -79,7 +80,8 @@
                 </div>
                 <span class="notification-unread-dot"></span>
               </a>
-              <!-- Low Stock Notification -->
+
+
               <a href="#" class="notification-item">
                 <div class="notification-icon bg-warning text-dark">
                   <i class="bi bi-box-seam-fill"></i>
@@ -88,7 +90,8 @@
                   <p class="notification-text">Stock running low: <strong>Hoodie</strong></p>
                   <span class="notification-time">3 hours ago</span>
                 </div>
-              </a>
+              </a> -->
+
             </div>
             <a href="#" class="notification-footer">View All Notifications</a>
           </div>
@@ -98,7 +101,7 @@
         <div class="dropdown ms-2">
           <button class="navbar-profile-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
             aria-expanded="false" id="profile-dropdown">
-            <img src="assets/images/avatar.png" alt="Profile Image" class="navbar-profile-img">
+            <img src="{{ asset('assets/images/avatar.png') }} " alt="Profile Image" class="navbar-profile-img">
             <span class="navbar-profile-name d-none d-md-inline">{{ Auth::user()->name }}</span>
             <i class="bi bi-chevron-down navbar-profile-caret"></i>
           </button>
@@ -110,8 +113,9 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-danger" href="page-login.html"><i class="bi bi-box-arrow-right"></i>
-                Logout</a></li>
+            <li><a class="dropdown-item text-danger" href="{{route('logout')}}"><i class="bi bi-box-arrow-right"></i>
+                Logout</a>
+              </li>
           </ul>
         </div>
       </div>

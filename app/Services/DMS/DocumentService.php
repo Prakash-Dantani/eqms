@@ -4,6 +4,7 @@ namespace App\Services\DMS;
 use App\Models\Department;
 use App\Models\Document;
 use App\Models\DocumentCategory;
+use App\Models\DocumentMaster;
 use App\Models\DocumentType;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ class DocumentService
             'documentType',
             'category',
             'department',
+            'documentData',
         ])->findOrFail($id);
     }
 
@@ -77,15 +79,31 @@ class DocumentService
 
             $attachment = null;
 
+            $document_no = $this->generateDocumentNumber();
+
             if ($request->hasFile('attachment')) {
 
-                $attachment = $request->file('attachment')
-                    ->store('documents', 'public');
+                // $attachment = $request->file('attachment')
+                //     ->store('documents', 'public');
+
+                $file        = $request->file('attachment');
+                $name        = $file->getClientOriginalName();
+                $type        = $file->extension();
+                $fileContent = base64_encode(file_get_contents($file));
+
+                $document_rec = DocumentMaster::create([
+                    'document_no' => $document_no,
+                    'data'        => $fileContent,
+                    'created_by'  => auth()->id(),
+                ]);
+                $document_id = $document_rec->id;
             }
+
             // dd($request->all());
             $document = Document::create([
 
-                'document_no'      => $this->generateDocumentNumber(),
+                'document_id'      => $document_id,
+                'document_no'      => $document_no,
                 'title'            => $request->title,
                 'document_type_id' => $request->document_type_id,
                 'category_id'      => $request->category_id,
@@ -96,7 +114,7 @@ class DocumentService
                 'review_date'      => $request->review_date,
                 'expiry_date'      => $request->expiry_date,
                 'description'      => $request->description,
-                'attachment'       => $attachment,
+                // 'attachment'       => $attachment,
                 'status'           => 'Draft',
                 'created_by'       => auth()->id(),
             ]);

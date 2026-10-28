@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    protected $fillable = ['document_no', 'title', 'document_type_id', 'category_id', 'department_id', 'owner', 'version', 'effective_date', 'review_date', 'expiry_date', 'description', 'attachment', 'status'];
+    protected $fillable = ['document_no', 'title', 'document_type_id', 'category_id', 'department_id', 'owner', 'version', 'effective_date', 'review_date', 'expiry_date', 'description', 'attachment', 'status', 'document_id'];
 
     public function documentType()
     {
@@ -20,6 +20,11 @@ class Document extends Model
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function documentData()
+    {
+        return $this->belongsTo(DocumentMaster::class, 'document_id', 'document_id');
     }
     // public function owner()
     // {

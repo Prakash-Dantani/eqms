@@ -54,12 +54,18 @@ class DocumentController extends Controller
 
     public function show($id)
     {
-        return response()->json(
-            $this->service->getById($id)
-        );
+        $document_rec  = $this->service->getById($id);
+        $document_data = $document_rec->documentData;
+        $bin           = base64_decode($document_data->data, true);
+        return response($bin)->header('Content-Type', 'application/pdf');
+
     }
     public function edit($id)
     {
+        $document_rec = $this->service->getById($id);
+        $data         = $this->service->createData();
+
+        return view('dms.documents.edit', compact('data', 'document_rec'));
 
     }
 

@@ -1,12 +1,19 @@
 <x-app-layout>
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/49.0.1/ckeditor5.css" />
+	<script src="https://cdn.ckeditor.com/ckeditor5/49.0.1/ckeditor5.umd.js"></script>
 
+	<style>
+	.main-container {
+		width: 795px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	</style>
 <div class="page-header">
 
     <div>
         <h1 class="page-title">Create Document</h1>
-        <p class="page-subtitle">
-            Create a new controlled document.
-        </p>
+
     </div>
 
 </div>
@@ -18,7 +25,11 @@
 @csrf
 
 <div class="row g-4">
-
+    <div class="main-container">
+		<div id="editor">
+			<p>Hello from CKEditor 5!</p>
+		</div>
+	</div>
     <!-- Document Information -->
 
     <div class="col-lg-6">

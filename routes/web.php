@@ -12,10 +12,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('documents', DocumentController::class);
+    Route::resource('documentType', DocumentController::class);
+    Route::resource('category', DocumentController::class);
+    Route::resource('department', DocumentController::class);
+
 });
 
 // Route::middleware(['auth'])->prefix('dms')->name('dms.')->group(function () {
@@ -27,8 +32,6 @@ Route::middleware('auth')->group(function () {
 // });
 
 Route::middleware(['auth'])->group(function () {
-
-    Route::resource('documents', DocumentController::class);
 
 });
 

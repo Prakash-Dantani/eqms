@@ -3,10 +3,14 @@
 <div class="page-header">
 
     <div>
-        <h1 class="page-title">Documents List</h1>
-        <p class="page-subtitle">
-            View documents.
-        </p>
+            <h1 class="page-title">Documents List</h1>
+            <!-- <p class="page-subtitle">
+                View documents.
+            </p> -->
+            <a class="btn-quick-action pull-right" id="quick-actions-dropdown" href="{{ route('documents.create') }}">
+                    <i class="bi bi-plus-lg"></i>
+                <span>Create</span>
+            </a>
     </div>
 
 </div>
