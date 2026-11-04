@@ -1,367 +1,300 @@
 <x-app-layout>
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/49.0.1/ckeditor5.css" />
-	<script src="https://cdn.ckeditor.com/ckeditor5/49.0.1/ckeditor5.umd.js"></script>
 
-	<style>
-	.main-container {
-		width: 795px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	</style>
-<div class="page-header">
+    <div class="page-header">
 
-    <div>
-        <h1 class="page-title">Create Document</h1>
-
-    </div>
-
-</div>
-
-<form action="{{ route('documents.store') }}"
-      method="POST"
-      enctype="multipart/form-data">
-
-@csrf
-
-<div class="row g-4">
-    <div class="main-container">
-		<div id="editor">
-			<p>Hello from CKEditor 5!</p>
-		</div>
-	</div>
-    <!-- Document Information -->
-
-    <div class="col-lg-6">
-
-        <div class="card border-light shadow-sm p-4 h-100">
-
-            <h5 class="card-title mb-4">
-                Document Information
-            </h5>
-
-            {{-- Document Number --}}
-
-            <div class="mb-3">
-
-                <label class="form-label-custom">
-                    Document Number
-                </label>
-
-                <input
-                    type="text"
-                    class="form-control-custom"
-                    value="Auto Generated"
-                    readonly>
-
-            </div>
-
-            {{-- Title --}}
-
-            <div class="mb-3">
-
-                <label class="form-label-custom">
-
-                    Title
-
-                </label>
-
-                <input
-                    type="text"
-                    name="title"
-                    class="form-control-custom"
-                    value="{{ old('title') }}"
-                    placeholder="Enter document title">
-
-            </div>
-
-            {{-- Type --}}
-
-            <div class="mb-3">
-
-                <label class="form-label-custom">
-
-                    Document Type
-
-                </label>
-
-                <select
-                  name="document_type_id"
-                  class="form-select-custom">
-
-                  <option value="">Select Document Type</option>
-
-                  @foreach($documentTypes as $type)
-
-                      <option
-                          value="{{ $type->id }}"
-                          {{ old('document_type_id') == $type->id ? 'selected' : '' }}>
-
-                          {{ $type->document_type_name }}
-
-                      </option>
-
-                  @endforeach
-
-              </select>
-
-            </div>
-
-            {{-- Category --}}
-
-            <div class="mb-3">
-
-                <label class="form-label-custom">
-
-                    Category
-
-                </label>
-
-                <select
-                  name="category_id"
-                  class="form-select-custom">
-
-                  <option value="">Select Category</option>
-
-                  @foreach($categories as $category)
-
-                      <option
-                          value="{{ $category->id }}">
-
-                          {{ $category->category_name }}
-
-                      </option>
-
-                  @endforeach
-
-              </select>
-
-            </div>
+        <div>
+            <h1 class="page-title">Create Document</h1>
 
         </div>
 
     </div>
 
+    <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
 
+        @csrf
 
-    <!-- Additional Details -->
+        <div class="row g-4">
+            <div class="col-lg-6">
 
-    <div class="col-lg-6">
+                <div class="card border-light shadow-sm p-4 h-100">
 
-        <div class="card border-light shadow-sm p-4 h-100">
+                    <h5 class="card-title mb-4">
+                        Document Information
+                    </h5>
 
-            <h5 class="card-title mb-4">
-                Additional Details
-            </h5>
+                    {{-- Document Number --}}
 
-            {{-- Department --}}
+                    <div class="mb-3">
 
-            <div class="mb-3">
+                        <label class="form-label-custom">
+                            Document Number
+                        </label>
 
-                <label class="form-label-custom">
+                        <input type="text" class="form-control-custom" value="Auto Generated" readonly>
 
-                    Department
+                    </div>
 
-                </label>
+                    {{-- Title --}}
 
-                <select
-                    name="department_id"
-                    class="form-select-custom">
+                    <div class="mb-3">
 
-                    <option value="">Select Department</option>
+                        <label class="form-label-custom">
 
-                    @foreach($departments as $department)
+                            Title
 
-                        <option
-                            value="{{ $department->id }}">
+                        </label>
 
-                            {{ $department->department_name }}
+                        <input type="text" name="title" class="form-control-custom" value="{{ old('title') }}"
+                            placeholder="Enter document title">
 
-                        </option>
+                    </div>
 
-                    @endforeach
+                    {{-- Type --}}
 
-                </select>
+                    <div class="mb-3">
+
+                        <label class="form-label-custom">
+
+                            Document Type
+
+                        </label>
+
+                        <select name="document_type_id" class="form-select-custom">
+
+                            <option value="">Select Document Type</option>
+
+                            @foreach ($documentTypes as $type)
+                            <option value="{{ $type->id }}"
+                                {{ old('document_type_id') == $type->id ? 'selected' : '' }}>
+
+                                {{ $type->document_type_name }}
+
+                            </option>
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                    {{-- Category --}}
+
+                    <div class="mb-3">
+
+                        <label class="form-label-custom">
+
+                            Category
+
+                        </label>
+
+                        <select name="category_id" class="form-select-custom">
+
+                            <option value="">Select Category</option>
+
+                            @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">
+
+                                {{ $category->category_name }}
+
+                            </option>
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            {{-- Owner --}}
 
-            <div class="mb-3">
 
-                <label class="form-label-custom">
+            <!-- Additional Details -->
 
-                    Owner
+            <div class="col-lg-6">
 
-                </label>
+                <div class="card border-light shadow-sm p-4 h-100">
 
-                <input
-                    name="owner"
-                    type="text"
-                    class="form-control-custom"
-                    value="Admin"
-                    readonly />
+                    <h5 class="card-title mb-4">
+                        Additional Details
+                    </h5>
+
+                    {{-- Department --}}
+
+                    <div class="mb-3">
+
+                        <label class="form-label-custom">
+
+                            Department
+
+                        </label>
+
+                        <select name="department_id" class="form-select-custom">
+
+                            <option value="">Select Department</option>
+
+                            @foreach ($departments as $department)
+                            <option value="{{ $department->id }}">
+
+                                {{ $department->department_name }}
+
+                            </option>
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                    {{-- Owner --}}
+
+                    <div class="mb-3">
+
+                        <label class="form-label-custom">
+
+                            Owner
+
+                        </label>
+
+                        <input name="owner" type="text" class="form-control-custom" value="Admin" readonly />
+
+                    </div>
+
+                    {{-- Version --}}
+
+                    <div class="mb-3">
+
+                        <label class="form-label-custom">
+
+                            Version
+
+                        </label>
+
+                        <input type="text" name="version" value="1.0" class="form-control-custom">
+
+                    </div>
+
+                </div>
 
             </div>
 
-            {{-- Version --}}
 
-            <div class="mb-3">
 
-                <label class="form-label-custom">
+            <!-- Dates -->
 
-                    Version
+            <div class="col-lg-6">
 
-                </label>
+                <div class="card border-light shadow-sm p-4">
 
-                <input
-                    type="text"
-                    name="version"
-                    value="1.0"
-                    class="form-control-custom">
+                    <h5 class="card-title mb-4">
+
+                        Document Dates
+
+                    </h5>
+
+                    <div class="mb-3">
+
+                        <label class="form-label-custom">
+
+                            Effective Date
+
+                        </label>
+
+                        <input type="date" name="effective_date" class="form-control-custom">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label-custom">
+
+                            Review Date
+
+                        </label>
+
+                        <input type="date" name="review_date" class="form-control-custom">
+
+                    </div>
+
+                    <div>
+
+                        <label class="form-label-custom">
+
+                            Expiry Date
+
+                        </label>
+
+                        <input type="date" name="expiry_date" class="form-control-custom">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Attachment -->
+
+            <div class="col-lg-6">
+
+                <div class="card border-light shadow-sm p-4">
+
+                    <h5 class="card-title mb-4">
+
+                        Attachment
+
+                    </h5>
+
+                    <div class="mb-3">
+
+                        <label class="form-label-custom">
+
+                            Upload Document
+
+                        </label>
+
+                        <input type="file" name="attachment" class="form-control-custom">
+
+                    </div>
+
+                    <div>
+
+                        <label class="form-label-custom">
+
+                            Description
+
+                        </label>
+
+                        <textarea name="descriptionss" rows="5" class="form-control-custom"></textarea>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
 
 
+        <div class="mt-4 d-flex justify-content-end gap-2">
 
-    <!-- Dates -->
+            <a href="{{ route('documents.index') }}" class="btn btn-secondary">
 
-    <div class="col-lg-6">
+                Cancel
 
-        <div class="card border-light shadow-sm p-4">
+            </a>
 
-            <h5 class="card-title mb-4">
+            <button type="submit" class="btn btn-success">
 
-                Document Dates
+                <i class="bi bi-check-circle"></i>
 
-            </h5>
+                Save Document
 
-            <div class="mb-3">
-
-                <label class="form-label-custom">
-
-                    Effective Date
-
-                </label>
-
-                <input
-                    type="date"
-                    name="effective_date"
-                    class="form-control-custom">
-
-            </div>
-
-            <div class="mb-3">
-
-                <label class="form-label-custom">
-
-                    Review Date
-
-                </label>
-
-                <input
-                    type="date"
-                    name="review_date"
-                    class="form-control-custom">
-
-            </div>
-
-            <div>
-
-                <label class="form-label-custom">
-
-                    Expiry Date
-
-                </label>
-
-                <input
-                    type="date"
-                    name="expiry_date"
-                    class="form-control-custom">
-
-            </div>
+            </button>
 
         </div>
 
-    </div>
-
-
-
-    <!-- Attachment -->
-
-    <div class="col-lg-6">
-
-        <div class="card border-light shadow-sm p-4">
-
-            <h5 class="card-title mb-4">
-
-                Attachment
-
-            </h5>
-
-            <div class="mb-3">
-
-                <label class="form-label-custom">
-
-                    Upload Document
-
-                </label>
-
-                <input
-                    type="file"
-                    name="attachment"
-                    class="form-control-custom">
-
-            </div>
-
-            <div>
-
-                <label class="form-label-custom">
-
-                    Description
-
-                </label>
-
-                <textarea
-                    name="description"
-                    rows="5"
-                    class="form-control-custom"></textarea>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<div class="mt-4 d-flex justify-content-end gap-2">
-
-    <a href="{{ route('documents.index') }}"
-       class="btn btn-secondary">
-
-        Cancel
-
-    </a>
-
-    <button
-        type="submit"
-        class="btn btn-success">
-
-        <i class="bi bi-check-circle"></i>
-
-        Save Document
-
-    </button>
-
-</div>
-
-</form>
+    </form>
 
 </x-app-layout>
+@include('components.ckeditor')

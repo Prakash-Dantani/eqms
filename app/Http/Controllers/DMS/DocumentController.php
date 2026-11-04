@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\DMS;
 
 use App\Http\Controllers\Controller;
@@ -27,7 +28,6 @@ class DocumentController extends Controller
         $data = $this->service->createData();
 
         return view('dms.documents.create', $data);
-
     }
 
     public function store(Request $request)
@@ -49,7 +49,6 @@ class DocumentController extends Controller
         return redirect()
             ->route('documents.index')
             ->with('success', 'Document Created Successfully');
-
     }
 
     public function show($id)
@@ -58,25 +57,34 @@ class DocumentController extends Controller
         $document_data = $document_rec->documentData;
         $bin           = base64_decode($document_data->data, true);
         return response($bin)->header('Content-Type', 'application/pdf');
-
     }
-    public function edit($id)
+
+    // OLD Edit
+    /* public function edit($id)
     {
         $document_rec = $this->service->getById($id);
         $data         = $this->service->createData();
 
         return view('dms.documents.edit', compact('data', 'document_rec'));
+    } */
 
-    }
-
-    public function update(Request $request, $id)
+    public function edit($id)
     {
-
+        $data = $this->service->editData($id);
+        echo "<pre>";
+        dd($data);
+        return view('dms.documents.edit', $data);
     }
 
-    public function destroy($id)
+    public function documentEdit(Request $request, $id)
     {
+        $document_rec = $this->service->getById($id);
+        $data         = $this->service->createData();
 
+        return view('dms.documents.document', compact('data', 'document_rec'));
     }
 
+    public function update(Request $request, $id) {}
+
+    public function destroy($id) {}
 }

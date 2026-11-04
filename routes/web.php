@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('category', DocumentController::class);
     Route::resource('department', DocumentController::class);
 
+    Route::get('document-edit/{id}', [DocumentController::class, 'documentEdit'])->name('document-edit');
 });
 
 // Route::middleware(['auth'])->prefix('dms')->name('dms.')->group(function () {
@@ -31,8 +32,6 @@ Route::middleware(['auth'])->group(function () {
 
 // });
 
-Route::middleware(['auth'])->group(function () {
-
-});
+Route::middleware(['auth'])->group(function () {});
 
 require __DIR__ . '/auth.php';
