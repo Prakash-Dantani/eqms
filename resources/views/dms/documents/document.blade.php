@@ -14,7 +14,7 @@
         @csrf
 
         <div class="row g-4">
-            <input type="hidden" name="id" id="id" value="{{ $document_rec->id }}">
+            <input type="hidden" name="id" id="id" value="{{ $document->id }}">
             <select name="revision_type" class="form-select">
 
                 <option value="minor">Minor Revision</option>
@@ -23,7 +23,8 @@
 
             </select>
             <div class="col-lg-12">
-                <textarea class="form-control ckeditor" id="ckeditor-textarea" name="description"></textarea>
+                <textarea class="form-control ckeditor" id="ckeditor-textarea"
+                    name="description">{{ old('description', $document->currentVersion->html_content ?? '') }}</textarea>
 
             </div>
 

@@ -25,7 +25,7 @@ class DocumentVersionService
             */
 
             $currentVersion = $document->currentVersion;
-            // dd($currentVersion);
+            // dd($document);
 
             if (!$this->hasChanges($document, $request)) {
 
@@ -75,7 +75,7 @@ class DocumentVersionService
             | Create Version
             |--------------------------------------------------------------------------
             */
-            // dd($document);
+            // dd('Document version Service call', $document);
             $newVersion = DocumentVersion::create([
 
                 'document_id'        => $document->id,
@@ -90,6 +90,7 @@ class DocumentVersionService
                 'document_type_id' => $document->document_type_id,
                 'category_id' => $document->category_id,
                 'department_id' => $document->department_id,
+                'html_content' => $request->description,
 
                 'effective_date'     => $document->effective_date,
 
@@ -113,16 +114,18 @@ class DocumentVersionService
             |--------------------------------------------------------------------------
             */
 
-            $document->update([
-
+            $docuement_rec = Document::findOrFail($document->id);
+            $isupdated = $docuement_rec->update([
                 'current_version_id' => $newVersion->id,
 
                 'current_status'     => $newVersion->status,
 
-                'version'            => $version
-
+                'version'            => $version,
+                'owner' => 'Prakash'
             ]);
 
+
+            // dd($document->id, $newVersion->id, $isupdated);
             return $newVersion;
         });
     }

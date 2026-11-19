@@ -578,4 +578,73 @@ class DocumentService
 
         ];
     }
+
+    public function getCurrentDocument(int $id): Document
+    {
+        return Document::with([
+
+            'documentType',
+
+            'category',
+
+            'department',
+
+            'ownerUser',
+
+            'currentVersion',
+
+            'currentVersion.documentMaster',
+
+        ])->findOrFail($id);
+    }
+
+
+    /**
+     * Get complete version history.
+     */
+    public function getVersionHistory(int $id): Document
+    {
+        return Document::with([
+
+            'versions' => function ($query) {
+
+                $query->latest('id');
+            },
+
+            'versions.createdBy',
+
+            'versions.documentMaster',
+
+        ])->findOrFail($id);
+    }
+
+
+    /**
+     * Get document with active version and version history.
+     */
+    public function getDocumentForEdit(int $id): Document
+    {
+        return Document::with([
+
+            'documentType',
+
+            'category',
+
+            'department',
+
+            // 'ownerUser',
+
+            'currentVersion',
+
+            'currentVersion.documentMaster',
+
+            'versions' => function ($query) {
+
+                $query->latest('id');
+            },
+
+            'versions.creator',
+
+        ])->findOrFail($id);
+    }
 }

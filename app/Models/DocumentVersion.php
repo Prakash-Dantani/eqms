@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class DocumentVersion extends Model
 {
@@ -111,6 +113,15 @@ class DocumentVersion extends Model
     public function attachments()
     {
         return $this->hasMany(DocumentAttachment::class);
+    }
+
+    public function documentMaster(): BelongsTo
+    {
+        return $this->belongsTo(
+            DocumentMaster::class,
+            'document_master_id',
+            'id'
+        );
     }
 
     public function auditLogs()

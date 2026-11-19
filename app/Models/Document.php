@@ -6,7 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-    protected $fillable = ['document_no', 'title', 'document_type_id', 'category_id', 'department_id', 'owner', 'version', 'effective_date', 'review_date', 'expiry_date', 'description', 'attachment', 'status', 'document_id'];
+    protected $fillable = [
+        'document_no',
+        'title',
+        'document_type_id',
+        'category_id',
+        'department_id',
+        'owner',
+        'version',
+        'effective_date',
+        'review_date',
+        'expiry_date',
+        'description',
+        'attachment',
+        'status',
+        'document_id',
+        'owner_id',
+        'workflow_id',
+        'current_step_id',
+        'current_status',
+        'current_version_id'
+    ];
 
     protected $casts = [
 

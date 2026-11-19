@@ -86,17 +86,17 @@ class DocumentController extends Controller
 
     public function documentEdit(Request $request, $id)
     {
-        $document_rec = $this->service->getById($id);
-        $data         = $this->service->createData();
+        // $document_rec = $this->service->getById($id);
+        $document = $this->service->getDocumentForEdit($id);
+        // $data         = $this->service->createData();
 
-        return view('dms.documents.document', compact('data', 'document_rec'));
+        return view('dms.documents.document', compact('document'));
     }
 
     public function updateDocument(Request $request)
     {
         $id = $request->id;
         // $document = $this->service->getById($id);
-
         $document = Document::findOrFail($id);
 
         $this->documentVersionService
