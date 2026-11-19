@@ -4,14 +4,26 @@
 
         <div>
             <h1 class="page-title">Documents List</h1>
-            <!-- <p class="page-subtitle">
-                View documents.
-            </p> -->
-            <a class="btn-quick-action pull-right" id="quick-actions-dropdown" href="{{ route('documents.create') }}">
-                <i class="bi bi-plus-lg"></i>
-                <span>Create</span>
-            </a>
+            <div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">DMS</li>
+                    <li class="breadcrumb-item active">Documents</li>
+                </ol>
+            </div>
         </div>
+
+        <div class="ms-auto">
+
+            <a href="{{ route('documents.create') }}" class="btn btn-quick-action">
+
+                <i class="fe fe-plus"></i>
+
+                Add Document
+
+            </a>
+
+        </div>
+
 
     </div>
 
@@ -160,21 +172,21 @@
 
 </x-app-layout>
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    $('#documentTable').DataTable({
-        responsive: true,
-        pageLength: 10,
-        autoWidth: false,
-        ordering: true,
-        searching: true,
-        info: true,
-        lengthChange: true,
-        language: {
-            search: "",
-            searchPlaceholder: "Search documents..."
-        }
+        $('#documentTable').DataTable({
+            responsive: true,
+            pageLength: 10,
+            autoWidth: false,
+            ordering: true,
+            searching: true,
+            info: true,
+            lengthChange: true,
+            language: {
+                search: "",
+                searchPlaceholder: "Search documents..."
+            }
+        });
+
     });
-
-});
 </script>

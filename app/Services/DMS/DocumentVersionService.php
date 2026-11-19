@@ -67,7 +67,7 @@ class DocumentVersionService
             // dd($currentVersion->version_no);
 
             $version = $currentVersion
-                ? $this->nextVersion($currentVersion->version_no)
+                ? $this->nextVersion($currentVersion->version_no, $request->revision_type)
                 : '1.0';
 
             /*
@@ -168,7 +168,7 @@ class DocumentVersionService
      * 1.0 -> 1.1
      * 1.9 -> 2.0
      */
-    public function nextVersion(string $version): string
+    public function nextVersion(string $version, string $revision_type): string
     {
         [$major, $minor] = array_pad(explode('.', $version), 2, 0);
 
@@ -177,7 +177,7 @@ class DocumentVersionService
 
         $minor++;
 
-        if ($minor >= 10) {
+        if ($minor >= 10 || $revision_type == 'major') {
             $major++;
             $minor = 0;
         }
