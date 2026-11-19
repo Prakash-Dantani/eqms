@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('department', DocumentController::class);
 
     Route::get('document-edit/{id}', [DocumentController::class, 'documentEdit'])->name('document-edit');
+    Route::post('update-document', [DocumentController::class, 'updateDocument'])->name('update-document');
 });
 
 // Route::middleware(['auth'])->prefix('dms')->name('dms.')->group(function () {

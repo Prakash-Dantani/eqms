@@ -8,7 +8,7 @@
 
     </div>
 
-    <form action="{{ route('documents.update', $document_rec->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('documents.update', $document->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
@@ -33,7 +33,7 @@
                             Document Number
                         </label>
 
-                        <input type="text" class="form-control-custom" value="Auto Generated" readonly>
+                        <input type="text" class="form-control-custom" value="{{ $document->document_no}}" readonly>
 
                     </div>
 
@@ -64,20 +64,18 @@
                         </label>
 
                         <select name="document_type_id" class="form-select-custom">
-
                             <option value="">Select Document Type</option>
 
                             @foreach($documentTypes as $type)
 
                             <option value="{{ $type->id }}"
-                                {{ old('document_type_id') == $type->id ? 'selected' : '' }}>
+                                {{ old('document_type_id', $document->currentVersion->document_type_id) == $type->id ? 'selected' : '' }}>
 
                                 {{ $type->document_type_name }}
 
                             </option>
 
                             @endforeach
-
                         </select>
 
                     </div>
@@ -93,19 +91,18 @@
                         </label>
 
                         <select name="category_id" class="form-select-custom">
-
                             <option value="">Select Category</option>
 
                             @foreach($categories as $category)
 
-                            <option value="{{ $category->id }}">
+                            <option value="{{ $category->id }}"
+                                {{ old('category_id', $document->currentVersion->category_id) == $category->id ? 'selected' : '' }}>
 
                                 {{ $category->category_name }}
 
                             </option>
 
                             @endforeach
-
                         </select>
 
                     </div>
@@ -137,19 +134,18 @@
                         </label>
 
                         <select name="department_id" class="form-select-custom">
-
                             <option value="">Select Department</option>
 
                             @foreach($departments as $department)
 
-                            <option value="{{ $department->id }}">
+                            <option value="{{ $department->id }}"
+                                {{ old('department_id', $document->currentVersion->department_id) == $department->id ? 'selected' : '' }}>
 
                                 {{ $department->department_name }}
 
                             </option>
 
                             @endforeach
-
                         </select>
 
                     </div>
@@ -166,6 +162,22 @@
 
                         <input name="owner" type="text" class="form-control-custom" value="Admin" readonly />
 
+                        <!-- <select name="owner" class="form-select-custom">
+
+                            <option value="">Select Owner</option>
+
+                            @foreach($owners as $owner)
+
+                            <option value="{{ $owner->id }}"
+                                {{ old('owner', $document->currentVersion->owner_id) == $owner->id ? 'selected' : '' }}>
+
+                                {{ $owner->name }}
+
+                            </option>
+
+                            @endforeach
+
+                        </select> -->
                     </div>
 
                     {{-- Version --}}
@@ -178,8 +190,8 @@
 
                         </label>
 
-                        <input type="text" name="version" value="1.0" class="form-control-custom">
-
+                        <input type="text" name="version" class="form-control-custom"
+                            value="{{ $document->currentVersion->version_no }}" readonly>
                     </div>
 
                 </div>
@@ -208,7 +220,8 @@
 
                         </label>
 
-                        <input type="date" name="effective_date" class="form-control-custom">
+                        <input type="date" name="effective_date" class="form-control-custom"
+                            value="{{ old('effective_date', $document->effective_date) }}">
 
                     </div>
 
@@ -220,7 +233,8 @@
 
                         </label>
 
-                        <input type="date" name="review_date" class="form-control-custom">
+                        <input type="date" name="review_date" class="form-control-custom"
+                            value="{{ old('review_date', $document->review_date) }}">
 
                     </div>
 
@@ -232,7 +246,8 @@
 
                         </label>
 
-                        <input type="date" name="expiry_date" class="form-control-custom">
+                        <input type="date" name="expiry_date" class="form-control-custom"
+                            value="{{ old('expiry_date', $document->expiry_date) }}">
 
                     </div>
 
@@ -274,7 +289,8 @@
 
                         </label>
 
-                        <textarea name="description" rows="5" class="form-control-custom"></textarea>
+                        <textarea name="description" rows="5"
+                            class="form-control-custom">{{ old('description', $document->description) }}</textarea>
 
                     </div>
 

@@ -264,7 +264,7 @@
 
                         </label>
 
-                        <textarea name="descriptionss" rows="5" class="form-control-custom"></textarea>
+                        <textarea name="description" rows="5" class="form-control-custom"></textarea>
 
                     </div>
 

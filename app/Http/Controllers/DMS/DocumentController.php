@@ -4,16 +4,21 @@ namespace App\Http\Controllers\DMS;
 
 use App\Http\Controllers\Controller;
 use App\Services\DMS\DocumentService;
+use App\Services\DMS\DocumentVersionService;
 use Illuminate\Http\Request;
+use App\Models\Document;
+
 
 class DocumentController extends Controller
 {
 
     private $service;
+    private $documentVersionService;
 
-    public function __construct(DocumentService $service)
+    public function __construct(DocumentService $service, DocumentVersionService $documentVersionService)
     {
         $this->service = $service;
+        $this->documentVersionService = $documentVersionService;
     }
 
     public function index()
@@ -71,10 +76,13 @@ class DocumentController extends Controller
     public function edit($id)
     {
         $data = $this->service->editData($id);
-        echo "<pre>";
-        dd($data);
+        // echo "<pre>";
+        // dd($data);
         return view('dms.documents.edit', $data);
     }
+
+    public function update(Request $request, $id) {}
+
 
     public function documentEdit(Request $request, $id)
     {
@@ -84,7 +92,29 @@ class DocumentController extends Controller
         return view('dms.documents.document', compact('data', 'document_rec'));
     }
 
-    public function update(Request $request, $id) {}
+    public function updateDocument(Request $request)
+    {
+        $id = $request->id;
+        // $document = $this->service->getById($id);
+
+        $document = Document::findOrFail($id);
+
+        $this->documentVersionService
+            ->createOrUpdateVersion($document, $request);
+
+        return redirect()
+            ->route('documents.index')
+            ->with('success', 'Document updated successfully.');
+
+
+
+        // echo "<pre>";
+        // dd($document_rec, $request->all());
+        // $data         = $this->service->createVersion();
+
+        // return view('dms.documents.document', compact('data', 'document_rec'));
+    }
+
 
     public function destroy($id) {}
 }

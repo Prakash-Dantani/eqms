@@ -15,9 +15,21 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\DocumentVersion;
 use App\Models\DocumentAuditLog;
 use Illuminate\Support\Facades\Auth;
+use App\Services\DMS\DocumentVersionService;
+// use App\Services\DMS\DocumentAuditService;
 
 class DocumentService
 {
+    protected DocumentVersionService $versionService;
+    // protected DocumentAuditService $auditService;
+
+    public function __construct(
+        DocumentVersionService $versionService,
+        // DocumentAuditService $auditService
+    ) {
+        $this->versionService = $versionService;
+        // $this->auditService   = $auditService;
+    }
     /**
      * Get all documents
      */
@@ -141,11 +153,33 @@ class DocumentService
 
         try {
 
+            $attachment = null;
+
+            $document_no = $this->generateDocumentNumber();
+
+            if ($request->hasFile('attachment')) {
+
+                // $attachment = $request->file('attachment')
+                //     ->store('documents', 'public');
+
+                $file        = $request->file('attachment');
+                $name        = $file->getClientOriginalName();
+                $type        = $file->extension();
+                $fileContent = base64_encode(file_get_contents($file));
+
+                $document_rec = DocumentMaster::create([
+                    'document_no' => $document_no,
+                    'data'        => $fileContent,
+                    'created_by'  => Auth::id(),
+                ]);
+                $document_id = $document_rec->id;
+            }
+
             // Generate Document Number
             $documentNo = $this->generateDocumentNumber();
 
             // Create Document
-            $document = $this->createDocument($documentNo);
+            $document = $this->createDocument($documentNo, $request);
 
             // Create Version 1.0
             $version = $this->createVersion($document, $request);
@@ -352,20 +386,32 @@ class DocumentService
         return 'DOC-' . str_pad($number, 6, '0', STR_PAD_LEFT);
     }
 
-    private function createDocument(string $documentNo): Document
+    private function createDocument(string $document_no, Request $request): Document
     {
         return Document::create([
 
-            'document_no' => $documentNo,
-
+            'document_no'      => $document_no,
+            'title'            => $request->title,
+            'document_type_id' => $request->document_type_id,
+            'category_id'      => $request->category_id,
+            'department_id'    => $request->department_id,
+            'owner'            => $request->owner,
+            'version'          => $request->version,
+            'effective_date'   => $request->effective_date,
+            'review_date'      => $request->review_date,
+            'expiry_date'      => $request->expiry_date,
+            'description'      => $request->description,
+            // 'attachment'       => $attachment,
+            'status'           => 'Draft',
             'workflow_id' => 1,
-
             'current_status' => 'Draft',
-
-            'created_by' => Auth::id()
-
+            'created_by'       => Auth::id(),
         ]);
     }
+
+
+
+
 
     private function createVersion(Document $document, Request $request): DocumentVersion
     {
@@ -389,7 +435,7 @@ class DocumentService
 
             'department_id' => $request->department_id,
 
-            'owner_id' => $request->owner,
+            // 'owner_id' => $request->owner,
 
             'html_content' => $request->description,
 
